@@ -1,26 +1,27 @@
 <div class=" h-screen flex items-center justify-center bg-[#92C7E7]">
-  <mat-card appearance="raised" >
+
+  <mat-card appearance="raised">
     <mat-card-header class="justify-center">
-    <h1>Employee Login</h1>
+      <h1>Employee Login</h1>
     </mat-card-header>
     <mat-card-content>
       <form class="w-full min-w-[150px] max-w-[500px] p-5 " [formGroup]="loginForm" (ngSubmit)="proceedLogin()">
         <mat-form-field class="w-full mb-2">
           <mat-label>Employee Id: </mat-label>
-          <input matInput formControlName="employeeId" >
-           <mat-error>{{checkEmpId(loginForm.controls['employeeId'])}}</mat-error>
-           
-          </mat-form-field>
-          <mat-form-field class="w-full mb-2">
-            <mat-label>Password: </mat-label>
-            <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password">
-            <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
-              <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error>{{checkPassword(loginForm.controls['password'])}}</mat-error>
+          <input matInput formControlName="employeeId">
+          <mat-error>{{checkEmpId(loginForm.controls['employeeId'])}}</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="w-full mb-2">
+          <mat-label>Password: </mat-label>
+          <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error>{{checkPassword(loginForm.controls['password'])}}</mat-error>
         </mat-form-field>
         <div class="mt-2 flex justify-center items-center">
-          <button mat-raised-button color="primary" >Log In</button>
+          <button mat-raised-button color="primary">Log In</button>
         </div>
       </form>
     </mat-card-content>
