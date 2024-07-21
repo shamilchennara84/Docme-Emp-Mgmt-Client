@@ -1,29 +1,58 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
-import Swal from 'sweetalert2';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+
+import { IEmployee } from '../../core/models/employee';
+import { EmployeeService } from '../../core/services/employee.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
 })
-export class EmployeeListComponent {
-  constructor(private router: Router, private auth: AuthService) {}
-
-  logout() {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, logout!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.auth.Adminlogout();
-      }
+export class EmployeeListComponent implements OnInit, OnDestroy {
+  updateEmployee(id: string) {
+    console.log('update');
+  }
+  
+  displayedColumns: string[] = [
+    'name',
+    'age',
+    'designation',
+    'phone',
+    'employeeId',
+    'email',
+    'address',
+    'location',
+    'action',
+  ];
+  employeeList: IEmployee[] = [];
+  dataSource = new MatTableDataSource<IEmployee>(this.employeeList);
+  subscriptions: Subscription[] = [];
+  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  constructor(private employeeService: EmployeeService) {}
+  
+  ngOnInit() {
+    const employeeSubscription = this.employeeService
+    .getAll()
+    .subscribe((employees) => {
+      this.employeeList = employees;
+      console.log(this.employeeList);
+      this.dataSource = new MatTableDataSource(this.employeeList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
+    this.subscriptions.push(employeeSubscription);
+  }
+  announceSortChange($event: Sort) {
+  console.log("announced");
+  }
+  
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

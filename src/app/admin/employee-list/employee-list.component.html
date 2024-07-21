@@ -1,30 +1,69 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button id="menuIcon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span id="menuTitle">Admin Dashboard</span>
-  <a mat-button routerLink="../employees" class="top-menu-item">Employees</a>
-  <span class="example-spacer"></span>
-  <a mat-button (click)="logout()">
-    <mat-icon>logout</mat-icon>Logout
-  </a>
-</mat-toolbar>
+<app-navbar>
+<div class="p-5">
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-<mat-sidenav-container>
-  <mat-sidenav #sidenav [fixedInViewport]="true" [fixedTopGap]="60" mode="side">
-    <div class="flex flex-col">
-      <div>
-        <a mat-button routerLink="../employees" class="side-menu-item" (click)="sidenav.close()">
-          <mat-icon>badge</mat-icon>Employees
-        </a>
-      </div>
+      <!-- Position Column -->
+      <ng-container matColumnDef="employeeId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header > ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Age Column -->
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Age </th>
+        <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+      </ng-container>
+
+      <!-- Designation Column -->
+      <ng-container matColumnDef="designation">
+        <th mat-header-cell *matHeaderCellDef > Designation </th>
+        <td mat-cell *matCellDef="let element"> {{element.designationTitle }} </td>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef > Phone </th>
+        <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef > Email </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <!-- Address Column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef > Address </th>
+        <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+      </ng-container>
+
+
+      <!-- Location Column -->
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+        <td mat-cell *matCellDef="let element"> {{element.city }} </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef > action </th>
+        <td mat-cell *matCellDef="let element"> <a (click)="updateEmployee(element._id)" mat-raised-button color="primary">Update</a> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+</div>
     
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="main-content">
-      <router-outlet></router-outlet>
-    </div>
 
-  </mat-sidenav-content>
-</mat-sidenav-container>
+</app-navbar>
