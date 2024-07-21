@@ -1,19 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
+
+import { Admin } from '../models/admin';
+import { AuthResponse } from '../models/authResponse';
+import { TokenService } from './token.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api'; // Replace with your API URL
+  private apiUrl = 'http://localhost:3000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenService: TokenService,private router:Router) {}
 
-  login(credentials: {
-    employeeId: string;
-    password: string;
-  }): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/employee/login`, credentials);
+  adminLogin(credentials: Admin): Observable<AuthResponse | null> {
+    console.log('hello');
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/admin/login`, credentials)
+      .pipe(
+        map((response) => {
+          localStorage.setItem('admintoken', response.token);
+          return response;
+        })
+      );
+  }
+
+  isAdminLoggedIn(): boolean {
+    return this.tokenService.isAdminAndValidToken();
+  }
+
+  Adminlogout() {
+    localStorage.removeItem('admintoken');
+    this.router.navigate(['/admin']);
   }
 }

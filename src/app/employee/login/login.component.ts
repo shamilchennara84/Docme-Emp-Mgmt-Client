@@ -39,9 +39,10 @@ export class LoginComponent {
     });
   }
   proceedLogin() {
-    if (this.loginForm && this.loginForm.valid) {
-      this.authService.login(this.loginForm.value.username);
-    }
+    // if (this.loginForm && this.loginForm.valid) {
+    //   this.authService.login(this.loginForm.value.username);
+    // }
+    console.log("testing");
   }
 
   clickEvent(event: MouseEvent) {

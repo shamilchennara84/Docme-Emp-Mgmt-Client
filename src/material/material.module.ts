@@ -11,6 +11,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 const matModules = [
@@ -24,7 +26,9 @@ const matModules = [
   MatPaginatorModule,
   MatSortModule,
   MatDialogModule,
-  MatIconModule
+  MatIconModule,
+  MatSidenavModule,
+  MatToolbarModule
 ];
 
 @NgModule({

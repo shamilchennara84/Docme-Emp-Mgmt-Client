@@ -8,9 +8,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { AuthService } from './core/services/auth.service';
+
 
 @NgModule({
-  declarations: [AppComponent,PageNotFoundComponent],
+  declarations: [AppComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -18,7 +20,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     HttpClientModule,
     ToastrModule.forRoot(),
   ],
-  providers: [provideAnimationsAsync()],
+  providers: [provideAnimationsAsync(), AuthService],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

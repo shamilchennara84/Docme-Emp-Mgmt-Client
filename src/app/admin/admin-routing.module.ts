@@ -1,17 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { adminAuthGuard } from '../core/guards/admin/adminauth.guard';
+import { adminLoggedinGuard } from '../core/guards/admin/admin-loggedin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  // { path: 'admin/employees', component: EmployeeListComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [adminLoggedinGuard],
+  },
+  {
+    path: 'employees',
+    component: EmployeeListComponent,
+    canActivate: [adminAuthGuard],
+  },
   // { path: 'admin/employee-form', component: EmployeeFormComponent },
   // { path: 'admin/employee-form/:id', component: EmployeeFormComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}
