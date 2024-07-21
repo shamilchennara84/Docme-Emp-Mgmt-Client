@@ -21,8 +21,13 @@ export interface IEmployee {
   city: string;
 }
 
-export interface IEmployeeResponse {
+export interface IEmployeesResponse {
   success: boolean;
   message: string;
   data: IEmployee[];
+}
+export interface IEmployeeResponse {
+  success: boolean;
+  message: string;
+  data: IEmployee;
 }
