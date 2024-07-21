@@ -12,7 +12,11 @@ import { Subscription } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { EmployeeFormComponent } from '../employee-form/employee-form.component';
+import { EmployeeFormEditComponent } from '../employee-form-edit/employee-form-edit.component';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EmployeeFormCreateComponent } from '../employee-form-create/employee-form-create.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -41,11 +45,12 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   constructor(
     private employeeService: EmployeeService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
-     this.fetchEmployees();
+    this.fetchEmployees();
   }
 
   fetchEmployees() {
@@ -61,8 +66,19 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(employeeSubscription);
   }
 
+  createEmployee() {
+    const popup = this.dialog.open(EmployeeFormCreateComponent, {
+      enterAnimationDuration: '300ms',
+      exitAnimationDuration: '300ms',
+      width: '50%',
+    });
+    popup.afterClosed().subscribe(() => {
+      this.fetchEmployees();
+    });
+  }
+
   updateEmployee(id: string) {
-    const popup = this.dialog.open(EmployeeFormComponent, {
+    const popup = this.dialog.open(EmployeeFormEditComponent, {
       enterAnimationDuration: '1000ms',
       exitAnimationDuration: '500ms',
       width: '50%',
@@ -71,10 +87,33 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       },
     });
     popup.afterClosed().subscribe((res) => {
-        this.fetchEmployees();
+      this.fetchEmployees();
     });
   }
 
+  deleteEmployee(id: string) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.employeeService.deleteEmployeeById(id).subscribe(
+          () => {
+            this.toastr.success('Employee deleted successfully!', 'Success');
+            this.fetchEmployees();
+          },
+          (error: HttpErrorResponse) => {
+            this.toastr.error('Failed to delete employee.', 'Error');
+          }
+        );
+      }
+    });
+  }
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }

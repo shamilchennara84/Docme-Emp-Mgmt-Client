@@ -31,3 +31,18 @@ export interface IEmployeeResponse {
   message: string;
   data: IEmployee;
 }
+
+
+// -------------------------------------------------
+
+export interface DeleteEmployeeSuccessResponse {
+  success: boolean;
+  message: string;
+  data:IEmployee;
+
+}
+
+export interface DeleteEmployeeErrorResponse {
+  success: boolean;
+  message: string;
+}

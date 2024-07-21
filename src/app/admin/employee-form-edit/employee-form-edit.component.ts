@@ -6,11 +6,11 @@ import { IEmployee } from '../../core/models/employee';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-employee-form',
-  templateUrl: './employee-form.component.html',
-  styleUrl: './employee-form.component.scss',
+  selector: 'app-employee-form-edit',
+  templateUrl: './employee-form-edit.component.html',
+  styleUrl: './employee-form-edit.component.scss',
 })
-export class EmployeeFormComponent implements OnInit {
+export class EmployeeFormEditComponent implements OnInit {
   employeeUpdateForm!: FormGroup;
   hide = signal(true);
   locations = [
@@ -44,7 +44,7 @@ export class EmployeeFormComponent implements OnInit {
     private empService: EmployeeService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private toaster: ToastrService,
-    private dialog: MatDialogRef<EmployeeFormComponent>
+    private dialog: MatDialogRef<EmployeeFormEditComponent>
   ) {}
 
   ngOnInit(): void {
@@ -87,10 +87,7 @@ export class EmployeeFormComponent implements OnInit {
   editEmployee() {
     if (this.employeeUpdateForm.valid) {
       this.empService
-        .updateEmployee(
-          this.editData._id,
-          this.employeeUpdateForm.value
-        )
+        .updateEmployee(this.editData._id, this.employeeUpdateForm.value)
         .subscribe(() => {
           this.toaster.success('Updated succesfully');
           this.dialog.close();
