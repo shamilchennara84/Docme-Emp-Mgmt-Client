@@ -8,7 +8,7 @@ import {
   IEmployeesResponse,
 } from '../models/employee';
 import { map, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

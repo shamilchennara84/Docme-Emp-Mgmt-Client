@@ -6,7 +6,7 @@ import { Admin, Employee } from '../models/user';
 import { AuthResponse } from '../models/authResponse';
 import { TokenService } from './token.service';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
