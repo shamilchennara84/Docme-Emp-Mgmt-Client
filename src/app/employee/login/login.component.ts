@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,16 +8,17 @@ import {
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   hide = signal(true);
-  errorMessage = signal('');
+  loginSubscription!: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -27,6 +28,10 @@ export class LoginComponent {
   ) {}
 
   ngOnInit(): void {
+    this.initializeLoginForm();
+  }
+
+  private initializeLoginForm(): void {
     this.loginForm = this.fb.group({
       employeeId: [
         '',
@@ -38,14 +43,25 @@ export class LoginComponent {
       ],
     });
   }
-  proceedLogin() {
-    // if (this.loginForm && this.loginForm.valid) {
-    //   this.authService.login(this.loginForm.value.username);
-    // }
-    console.log("testing");
+
+  proceedLogin(): void {
+    if (this.loginForm.valid) {
+      const credentials = this.loginForm.value;
+      this.loginSubscription = this.authService
+        .employeeLogin(credentials)
+        .subscribe({
+          next: () => {
+            this.toastr.success('Login successful!', 'Success');
+            this.router.navigate(['/employee/profile']);
+          },
+          error: () => {
+            this.toastr.error('Login failed. Please try again.', 'Error');
+          },
+        });
+    }
   }
 
-  clickEvent(event: MouseEvent) {
+  togglePasswordVisibility(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
@@ -65,5 +81,11 @@ export class LoginComponent {
       return 'Password must be at least 8 characters long';
     }
     return '';
+  }
+
+  ngOnDestroy(): void {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
   }
 }

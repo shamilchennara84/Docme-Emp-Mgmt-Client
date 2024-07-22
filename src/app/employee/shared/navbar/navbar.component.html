@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button id="menuIcon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span id="menuTitle">Employee Portal</span>
+  <a mat-button routerLink="../profile" class="top-menu-item">Profile</a>
+  <span class="example-spacer"></span>
+  <a mat-button (click)="logout()">
+    <mat-icon>logout</mat-icon>Logout
+  </a>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav [fixedInViewport]="true" [fixedTopGap]="60" mode="side">
+    <div class="flex flex-col">
+      <div>
+        <a mat-button routerLink="../profile" class="side-menu-item" (click)="sidenav.close()">
+          <mat-icon>badge</mat-icon>Profile 
+        </a>
+      </div>
+
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="main-content">
+      <ng-content></ng-content>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

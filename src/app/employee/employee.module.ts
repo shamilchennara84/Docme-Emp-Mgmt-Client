@@ -6,17 +6,21 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MaterialModule } from '../../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { ContactEditComponent } from './contact-edit/contact-edit.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    NavbarComponent,
+    ContactEditComponent
   ],
   imports: [
     CommonModule,
-    EmployeeRoutingModule,
     MaterialModule,
+    EmployeeRoutingModule,
     ReactiveFormsModule
   ]
 })

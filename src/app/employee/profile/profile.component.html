@@ -1,1 +1,54 @@
-<p>profile works!</p>
+<app-navbar>
+  <div class="container mx-auto p-4">
+    <button mat-raised-button color="primary" class="mb-4">
+      <mat-icon>edit</mat-icon>Edit Contact Details
+    </button>
+
+    <!-- Dynamic data example -->
+    <mat-card *ngIf="employeeData" class="custom-card">
+      <mat-card-header>
+        <mat-card-title>
+          <h2 class="card-title">
+            {{ employeeData.name }}
+          </h2>
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ employeeData.designationTitle }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div>
+            <mat-list>
+              <mat-list-item>
+                <strong class="info-label">Employee ID:</strong>
+                {{ employeeData.employeeId }}
+              </mat-list-item>
+              <mat-list-item>
+                <strong class="info-label">Location:</strong>
+                {{ employeeData.city }}
+              </mat-list-item>
+              <mat-list-item>
+                <strong class="info-label">Phone:</strong>
+                {{ employeeData.phone }}
+              </mat-list-item>
+              <mat-list-item>
+                <strong class="info-label">Email:</strong>
+                {{ employeeData.email }}
+              </mat-list-item>
+              <mat-list-item>
+                <strong class="info-label">Address:</strong>
+                {{ employeeData.address }}
+              </mat-list-item>
+              <mat-list-item>
+                <strong class="info-label">Age:</strong>
+                {{ employeeData.age }}
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</app-navbar>

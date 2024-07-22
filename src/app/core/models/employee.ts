@@ -35,14 +35,15 @@ export interface IEmployeeResponse {
 
 // -------------------------------------------------
 
-export interface DeleteEmployeeSuccessResponse {
+export interface IDeleteEmployeeResponse {
   success: boolean;
   message: string;
-  data:IEmployee;
+  data?:IEmployee;
 
 }
 
-export interface DeleteEmployeeErrorResponse {
+export interface ICreateEmployeeResponse {
   success: boolean;
   message: string;
+  data?: IEmployee;
 }

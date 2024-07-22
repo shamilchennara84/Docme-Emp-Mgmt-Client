@@ -7,10 +7,7 @@ import Swal from 'sweetalert2';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  constructor(
-    private auth: AuthService,
-  
-  ) {}
+  constructor(private auth: AuthService) {}
   logout() {
     Swal.fire({
       title: 'Are you sure?',
@@ -22,7 +19,7 @@ export class NavbarComponent {
       confirmButtonText: 'Yes, logout!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.auth.Adminlogout();
+        this.auth.employeeLogout();
       }
     });
   }

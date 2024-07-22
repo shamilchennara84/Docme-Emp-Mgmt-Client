@@ -19,7 +19,7 @@ export class TokenService {
       const currentTime = Date.now() / 1000;
 
       if (decodedToken.exp < currentTime) {
-        this.removeExpiredToken();
+        this.removeAdminToken();
         return false;
       }
 
@@ -30,11 +30,43 @@ export class TokenService {
       console.error('Error decoding token:', error);
     }
 
-    this.removeExpiredToken();
+    this.removeAdminToken();
     return false;
   }
 
-  removeExpiredToken() {
+  // ===================================
+
+  isEmployeeAndValidToken(): boolean {
+    const token = localStorage.getItem('employeetoken');
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const decodedToken: DecodedJWT = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+
+      if (decodedToken.exp < currentTime) {
+        this.removeEmployeeToken();
+        return false;
+      }
+
+      if (decodedToken.role !== 'admin') {
+        return true;
+      }
+    } catch (error) {
+      console.error('Error decoding token:', error);
+    }
+
+    this.removeEmployeeToken();
+    return false;
+  }
+
+  removeAdminToken() {
     localStorage.removeItem('admintoken');
+  }
+
+  removeEmployeeToken() {
+    localStorage.removeItem('employeetoken');
   }
 }

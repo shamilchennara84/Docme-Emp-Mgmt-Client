@@ -10,7 +10,7 @@ import { EmployeeService } from '../../core/services/employee.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort} from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeFormEditComponent } from '../employee-form-edit/employee-form-edit.component';
 import { ToastrService } from 'ngx-toastr';
@@ -24,6 +24,7 @@ import { EmployeeFormCreateComponent } from '../employee-form-create/employee-fo
   styleUrl: './employee-list.component.scss',
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
+
   displayedColumns: string[] = [
     'name',
     'age',
@@ -35,42 +36,58 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     'location',
     'action',
   ];
-
+  
+  filterInput = '';
+  
   employeeList: IEmployee[] = [];
   dataSource = new MatTableDataSource<IEmployee>(this.employeeList);
   subscriptions: Subscription[] = [];
-
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  
   constructor(
     private employeeService: EmployeeService,
     private dialog: MatDialog,
     private toastr: ToastrService
   ) {}
-
+  
   ngOnInit() {
     this.fetchEmployees();
   }
-
+  
   fetchEmployees() {
     const employeeSubscription = this.employeeService
-      .getAll()
-      .subscribe((employees) => {
-        this.employeeList = employees;
-        console.log(this.employeeList);
-        this.dataSource = new MatTableDataSource(this.employeeList);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
+    .getAll()
+    .subscribe((employees) => {
+      this.employeeList = employees;
+      console.log(this.employeeList);
+      this.dataSource = new MatTableDataSource(this.employeeList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
     this.subscriptions.push(employeeSubscription);
   }
+  
+  applyFilters() {
+    const filteredData = this.employeeList.filter((employee) => {
+      return (
+        employee.designationTitle
+          .toLowerCase()
+          .includes(this.filterInput.toLowerCase()) ||
+        employee.city.toLowerCase().includes(this.filterInput.toLowerCase())
+      );
+    });
 
+    this.dataSource.data = filteredData;
+  }
+  
   createEmployee() {
     const popup = this.dialog.open(EmployeeFormCreateComponent, {
-      enterAnimationDuration: '300ms',
-      exitAnimationDuration: '300ms',
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '500ms',
       width: '50%',
+      height: '90%',
     });
     popup.afterClosed().subscribe(() => {
       this.fetchEmployees();

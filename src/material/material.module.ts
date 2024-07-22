@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {  MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -32,8 +34,9 @@ const matModules = [
   MatIconModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatAutocompleteModule
-
+  MatAutocompleteModule,
+  MatListModule,
+MatProgressSpinnerModule
 ];
 
 @NgModule({

@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-header>
+    <h1>Update Employee Information</h1>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="w-full min-w-[150px] max-w-[800px] p-5" [formGroup]="contactUpdateForm" (ngSubmit)="editContact()">
+      <mat-form-field class="w-full mb-2">
+        <mat-label>Employee ID: </mat-label>
+        <input matInput formControlName="employeeId" />
+      </mat-form-field>
+      <mat-form-field class="w-full mb-2">
+        <mat-label>Email: </mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="w-full mb-2">
+        <mat-label>Phone Number: </mat-label>
+        <input matInput formControlName="phoneNumber" />
+      </mat-form-field>
+      <div class="mt-2 flex justify-center items-center gap-4">
+        <button mat-raised-button color="primary" type="submit">Update</button>
+        <a mat-dialog-close mat-raised-button color="accent">cancel</a>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -17,8 +17,6 @@ const routes: Routes = [
     component: EmployeeListComponent,
     canActivate: [adminAuthGuard],
   },
-  // { path: 'admin/employee-form', component: EmployeeFormComponent },
-  // { path: 'admin/employee-form/:id', component: EmployeeFormComponent },
 ];
 
 @NgModule({

@@ -2,6 +2,7 @@
 
   <mat-card appearance="raised">
     <mat-card-header class="justify-center">
+      
       <h1>Employee Login</h1>
     </mat-card-header>
     <mat-card-content>
@@ -15,7 +16,7 @@
         <mat-form-field class="w-full mb-2">
           <mat-label>Password: </mat-label>
           <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password">
-          <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+          <button mat-icon-button matSuffix (click)=" togglePasswordVisibility($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
             <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
           <mat-error>{{checkPassword(loginForm.controls['password'])}}</mat-error>

@@ -1,9 +1,24 @@
 <app-navbar>
   <div class="p-5">
-    <div><a mat-raised-button color="primary" class="mb-2" (click)="createEmployee()">
-        <mat-icon>add</mat-icon> 
-        Create Employee
-      </a></div>
+    <div class="flex justify-between">
+      <div><a mat-raised-button color="primary" class="my-3" (click)="createEmployee()">
+          <mat-icon>add</mat-icon>
+          Create Employee
+        </a></div>
+      
+     <div class="hidden md:block">
+   <form class="filter-form flex items-center space-x-2" (ngSubmit)="applyFilters()">
+     <mat-form-field class="example-full-width">
+       <mat-label>Filter by Designation or Location</mat-label>
+       <input matInput placeholder="Ex. Manager" [(ngModel)]="filterInput" name="filterCriteria" required>
+     </mat-form-field>
+     <button mat-mini-fab color="primary" type="submit" class="mb-4">
+       <mat-icon>filter_alt</mat-icon>
+     </button>
+   </form>
+     </div>
+    </div>
+
 
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
