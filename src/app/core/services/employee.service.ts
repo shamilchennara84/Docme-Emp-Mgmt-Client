@@ -44,6 +44,13 @@ export class EmployeeService {
     return this.http.put(`${this.apiUrl}/admin/employees/${employeeId}`, value);
   }
 
+  updateContact(employeeId: string, value: Partial<IEmployee>) {
+    return this.http.put(
+      `${this.apiUrl}/employee/profile/${employeeId}`,
+      value
+    );
+  }
+
   deleteEmployeeById(employeeId: string): Observable<IDeleteEmployeeResponse> {
     return this.http.delete<IDeleteEmployeeResponse>(
       `${this.apiUrl}/admin/employees/${employeeId}`

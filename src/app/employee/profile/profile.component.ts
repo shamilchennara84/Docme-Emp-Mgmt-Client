@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IEmployee } from '../../core/models/employee';
 import { EmployeeService } from '../../core/services/employee.service';
-import { getIdFromJwtToken } from '../shared/utils/jwt-decode';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { ContactEditComponent } from '../contact-edit/contact-edit.component';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +13,11 @@ import { getIdFromJwtToken } from '../shared/utils/jwt-decode';
 export class ProfileComponent {
   employeeData!: IEmployee;
   employeeId!: string | null;
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private dialog: MatDialog,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.fetchEmployeeData();
@@ -28,4 +34,19 @@ export class ProfileComponent {
       },
     });
   }
+
+  updateEmployee() {
+     const popup = this.dialog.open(ContactEditComponent, {
+       enterAnimationDuration: '1000ms',
+       exitAnimationDuration: '500ms',
+       width: '50%',
+       data: {
+         user: this.employeeData,
+       },
+     });
+     popup.afterClosed().subscribe((res) => {
+       this.fetchEmployeeData();
+     });
+  }
+
 }

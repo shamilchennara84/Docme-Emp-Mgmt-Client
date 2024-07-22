@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, Subject } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { Admin, Employee } from '../models/user';
 import { AuthResponse } from '../models/authResponse';
