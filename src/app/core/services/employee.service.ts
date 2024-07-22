@@ -8,13 +8,14 @@ import {
   IEmployeesResponse,
 } from '../models/employee';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
   constructor(private http: HttpClient) {}
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = environment.apiUrl;
 
   getAll(): Observable<IEmployee[]> {
     return this.http
